@@ -12,6 +12,8 @@ RUN go install
 FROM alpine:latest
 LABEL maintainer "youtous <contact@youtous.me>"
 
+EXPOSE 8080
+
 ENTRYPOINT ["odfe-alerts-handler"]
 
 RUN apk add --no-cache ca-certificates curl
