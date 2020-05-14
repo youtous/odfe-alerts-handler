@@ -17,3 +17,5 @@ vendor/
 # Others
 dist/
 odfe-alerts-handler
+
+.idea

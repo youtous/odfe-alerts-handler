@@ -1,4 +1,4 @@
-FROM golang:1.12-alpine AS builder
+FROM golang:1.14-alpine AS builder
 
 WORKDIR /src/app
 
@@ -10,7 +10,7 @@ COPY . .
 RUN go install
 
 FROM alpine:latest
-LABEL maintainer "Alex Simenduev <shamil.si@gmail.com>"
+LABEL maintainer "youtous <contact@youtous.me>"
 
 ENTRYPOINT ["odfe-alerts-handler"]
 

@@ -9,7 +9,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/bringg/odfe-alerts-handler/handlers"
+	"github.com/youtous/odfe-alerts-handler/handlers"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
 	"gopkg.in/alecthomas/kingpin.v2"
@@ -32,7 +32,6 @@ func main() {
 		smtpPassword       = kingpin.Flag("smtp.password", "SMTP server login password.").Default("").String()
 		smtpFrom           = kingpin.Flag("smtp.from", "SMTP from address.").Default(fmt.Sprintf("opendistro@%s", hostname)).String()
 		smtpDefaultSubject = kingpin.Flag("smtp.default-subject", "SMTP default subject.").Default("Opendistro Alert fired").String()
-		slackToken         = kingpin.Flag("slack.token", "Slack token for posting messages.").Default("").String()
 	)
 
 	kingpin.HelpFlag.Short('h')
@@ -47,14 +46,9 @@ func main() {
 		DefaultSubject: *smtpDefaultSubject,
 	}
 
-	slackHandler := handlers.Slack{
-		Token: *slackToken,
-	}
-
 	e := echo.New()
 	e.HideBanner = true
 
-	e.POST("/slack", slackHandler.EchoHandler)
 	e.POST("/email", emailHandler.EchoHandler)
 
 	s := &http.Server{

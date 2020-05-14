@@ -8,21 +8,19 @@ An HTTP server which used to handle webhooks triggered by [OpenDistro for Elasti
 
 As for time  of writing `destination` options that `ODFE` provides are limited.
 
-1. It is not possible to post to different Slack channels using same Incoming Webhook URL, see [issue](https://github.com/opendistro-for-elasticsearch/alerting-kibana-plugin/issues/85)
 2. It is not possible to send emails
 
 ## Features
 
 - Ability to handle emails, and even send emails to multiple addresses within same webhook
-- Ability to post to multiple slack channels and/or users within same webhook
 
 ## Install
 
-Download latest version for your platform from [releases](https://github.com/bringg/odfe-alerts-handler/releases) page
+Download latest version for your platform from [releases](https://github.com/youtous/odfe-alerts-handler/releases) page
 
 ## With Docker
 
-    docker run --rm -p 8080:8080 bringg/odfe-alerts-handler --help
+    docker run --rm -p 8080:8080 youtous/odfe-alerts-handler --help
 
 ## Usage
 
@@ -40,7 +38,6 @@ Download latest version for your platform from [releases](https://github.com/bri
                                 SMTP from address.
         --smtp.default-subject="Opendistro Alert fired"
                                 SMTP default subject.
-        --slack.token=""         Slack token for posting messages.
 
 ## Configure ODFE Alerting destinations
 
@@ -49,7 +46,6 @@ Download latest version for your platform from [releases](https://github.com/bri
 1. Go to `Alerting` > `Destinations`
 2. Create the destination with type `Custom webhook`
 3. Choose `Define endpoint by URL`
-    - For `slack` set the url to have path with `/slack`, like `http://odfe-server:8080/slack`
     - For `email` set the url to have path with `/email`, like `http://odfe-server:8080/email`
 
 ### Sending Email from triggers
@@ -67,21 +63,6 @@ Here you can use the templeting as usual...
 
 `subject` is optional, if not provided the default one used, see [usage](#usage).
 
-### Sending Slack from triggers
-
-1. Select destination which was created with the `/slack` path
-2. The `Message` body look like below:
-
-```yaml
-channels: ['#alerts']
-users: ['test@example.com']
----
-This is the body of the message
-Here you can use the templeting as usual...
-```
-
-You can have both `channels` and `users` keys if you desire to send to both.
-Optionally, for `channels` you can omit the leading `#`.
 
 ## Creating a release
 
