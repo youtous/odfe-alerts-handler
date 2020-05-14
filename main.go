@@ -9,9 +9,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/youtous/odfe-alerts-handler/handlers"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
+	"github.com/youtous/odfe-alerts-handler/handlers"
 	"gopkg.in/alecthomas/kingpin.v2"
 )
 
@@ -25,13 +25,13 @@ func main() {
 	hostname, _ := os.Hostname()
 
 	var (
-		listenAddress      = kingpin.Flag("web.listen-address", "Address to listen on for incoming HTTP requests.").Default(":8080").String()
-		smtpHost           = kingpin.Flag("smtp.host", "SMTP server hostname.").Default("localhost").String()
-		smtpPort           = kingpin.Flag("smtp.port", "SMTP server port.").Default("25").Int()
-		smtpUsername       = kingpin.Flag("smtp.username", "SMTP server login username.").Default("").String()
-		smtpPassword       = kingpin.Flag("smtp.password", "SMTP server login password.").Default("").String()
-		smtpFrom           = kingpin.Flag("smtp.from", "SMTP from address.").Default(fmt.Sprintf("opendistro@%s", hostname)).String()
-		smtpDefaultSubject = kingpin.Flag("smtp.default-subject", "SMTP default subject.").Default("Opendistro Alert fired").String()
+		listenAddress      = kingpin.Flag("web.listen-address", "Address to listen on for incoming HTTP requests.").Default(":8080").Envar("LISTEN_ADDRESS").String()
+		smtpHost           = kingpin.Flag("smtp.host", "SMTP server hostname.").Default("localhost").Envar("SMTP_HOSTNAME").String()
+		smtpPort           = kingpin.Flag("smtp.port", "SMTP server port.").Default("25").Envar("SMTP_PORT").Int()
+		smtpUsername       = kingpin.Flag("smtp.username", "SMTP server login username.").Default("").Envar("SMTP_USERNAME").String()
+		smtpPassword       = kingpin.Flag("smtp.password", "SMTP server login password.").Default("").Envar("SMTP_PASSWORD").String()
+		smtpFrom           = kingpin.Flag("smtp.from", "SMTP from address.").Default(fmt.Sprintf("opendistro@%s", hostname)).Envar("SMTP_FROM").String()
+		smtpDefaultSubject = kingpin.Flag("smtp.default-subject", "SMTP default subject.").Default("Opendistro Alert fired").Envar("SMTP_DEFAULT_SUBJECT").String()
 	)
 
 	kingpin.HelpFlag.Short('h')
