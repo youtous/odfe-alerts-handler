@@ -2,7 +2,6 @@
 
 An HTTP server which used to handle webhooks triggered by [OpenDistro for Elasticsearch Alerting](https://opendistro.github.io/for-elasticsearch-docs/docs/alerting)
 
-> Notice, the readme is for `0.2.x` version
 
 ## Why?
 
@@ -27,17 +26,27 @@ Download latest version for your platform from [releases](https://github.com/you
     usage: odfe-alerts-handler [<flags>]
 
     Flags:
-    -h, --help                   Show context-sensitive help (also try --help-long and --help-man).
-        --web.listen-address=":8080"
-                                Address to listen on for incoming HTTP requests.
-        --smtp.host="localhost"  SMTP server hostname.
-        --smtp.port=25           SMTP server port.
-        --smtp.username=""       SMTP server login username.
-        --smtp.password=""       SMTP server login password.
-        --smtp.from="opendistro@localhost"
-                                SMTP from address.
-        --smtp.default-subject="Opendistro Alert fired"
-                                SMTP default subject.
+      -h, --help                   Show context-sensitive help (also try --help-long and --help-man).
+          --web.listen-address=":8080"  
+                                   Address to listen on for incoming HTTP requests.
+          --smtp.host="localhost"  SMTP server hostname.
+          --smtp.port=25           SMTP server port.
+          --smtp.username=""       SMTP server login username.
+          --smtp.password=""       SMTP server login password.
+          --smtp.from="opendistro@localhost"    SMTP from address.
+          --smtp.default-subject="Opendistro Alert fired"  
+                                   SMTP default subject.
+
+    Env:
+          LISTEN_ADDRESS           Address to listen on for incoming HTTP requests.
+          SMTP_HOSTNAME            SMTP server hostname.
+          SMTP_PORT                SMTP server port.
+          SMTP_USERNAME            SMTP server login username.
+          SMTP_PASSWORD            SMTP server login password.
+          SMTP_FROM                SMTP from address.
+          SMTP_DEFAULT_SUBJECT     SMTP default subject.
+    
+
 
 ## Configure ODFE Alerting destinations
 
