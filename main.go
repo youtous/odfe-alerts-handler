@@ -32,7 +32,7 @@ func main() {
 		smtpPassword       = kingpin.Flag("smtp.password", "SMTP server login password.").Default("").Envar("SMTP_PASSWORD").String()
 		smtpFrom           = kingpin.Flag("smtp.from", "SMTP from address.").Default(fmt.Sprintf("opendistro@%s", hostname)).Envar("SMTP_FROM").String()
 		smtpDefaultSubject = kingpin.Flag("smtp.default-subject", "SMTP default subject.").Default("Opendistro Alert fired").Envar("SMTP_DEFAULT_SUBJECT").String()
-		debug	 		   = kingpin.Flag("debug", "Enable debug mode.").Default("false").Envar("DEBUG").Bool()
+		debug	 		   = kingpin.Flag("debug", "Enable debug mode.").Envar("DEBUG").Bool()
 	)
 
 	kingpin.HelpFlag.Short('h')
