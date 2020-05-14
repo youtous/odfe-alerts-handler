@@ -9,7 +9,6 @@ import (
 
 	emailClient "github.com/jordan-wright/email"
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/gommon/log"
 )
 
 // Email used to configure common params for sending email
@@ -60,14 +59,14 @@ func (e Email) EchoHandler(c echo.Context) error {
 	if err != nil {
 		response := fmt.Sprintf("email was not sent, %v", err)
 
-		log.Error(response)
+		c.Logger().Error(response)
 		return echo.NewHTTPError(http.StatusInternalServerError, response)
 	}
 
 	if len(emailer.To) == 0 {
 		response := "email was not sent, 'To' param wasn't provided"
 
-		log.Error(response)
+		c.Logger().Error(response)
 		return echo.NewHTTPError(http.StatusBadRequest, response)
 	}
 
@@ -76,11 +75,11 @@ func (e Email) EchoHandler(c echo.Context) error {
 	if err := emailer.send(); err != nil {
 		response := fmt.Sprintf("email was not sent, to: %v, subject: %s, %v", emailer.To, emailer.Subject, err)
 
-		log.Error(response)
+		c.Logger().Error(response)
 		return echo.NewHTTPError(http.StatusInternalServerError, response)
 	}
 
 	response := fmt.Sprintf("email successfuly sent, to: %v, subject: %s", emailer.To, emailer.Subject)
-	log.Info(response)
+	c.Logger().Info(response)
 	return echo.NewHTTPError(http.StatusOK, response)
 }

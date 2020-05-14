@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/labstack/echo/v4/middleware"
 	"net/http"
 	"os"
 	"os/signal"
@@ -51,6 +52,9 @@ func main() {
 	e.HideBanner = true
 	e.Debug = *debug
 
+	e.Use(middleware.Logger())
+	e.Use(middleware.Recover())
+
 	e.GET("/_health", func(c echo.Context) error {
 		return c.String(http.StatusOK, "RUNNING")
 	})
@@ -66,7 +70,7 @@ func main() {
 
 	go func() {
 		if err := e.StartServer(s); err != nil && err != http.ErrServerClosed {
-			log.Fatal(err)
+			e.Logger.Fatal(err)
 		}
 	}()
 
@@ -78,8 +82,8 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), shutdownTimeout)
 	defer cancel()
 
-	log.Info("shutting down with graceful timeout of", shutdownTimeout)
+	e.Logger.Info("shutting down with graceful timeout of", shutdownTimeout)
 	if err := s.Shutdown(ctx); err != nil {
-		log.Fatal(err)
+		e.Logger.Fatal(err)
 	}
 }
