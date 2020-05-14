@@ -14,5 +14,8 @@ LABEL maintainer "youtous <contact@youtous.me>"
 
 ENTRYPOINT ["odfe-alerts-handler"]
 
-RUN apk add --no-cache ca-certificates
+RUN apk add --no-cache ca-certificates curl
+
+HEALTHCHECK CMD curl --silent --fail http://localhost:8080/_health > /dev/null || exit 1
+
 COPY --from=builder /go/bin/odfe-alerts-handler /usr/local/bin/

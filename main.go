@@ -49,6 +49,9 @@ func main() {
 	e := echo.New()
 	e.HideBanner = true
 
+	e.GET("/_health", func(c echo.Context) error {
+		return c.String(http.StatusOK, "RUNNING")
+	})
 	e.POST("/email", emailHandler.EchoHandler)
 
 	s := &http.Server{
