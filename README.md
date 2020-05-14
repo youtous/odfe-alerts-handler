@@ -2,22 +2,20 @@
 
 An HTTP server which used to handle webhooks triggered by [OpenDistro for Elasticsearch Alerting](https://opendistro.github.io/for-elasticsearch-docs/docs/alerting)
 
-
 ## Why?
 
 As for time  of writing `destination` options that `ODFE` provides are limited.
 
-2. It is not possible to send emails
+1. It is not possible to send emails
 
 ## Features
 
 - Ability to handle emails, and even send emails to multiple addresses within same webhook
 
-## Install
+## Usage
 
-Download latest version for your platform from [releases](https://github.com/youtous/odfe-alerts-handler/releases) page
 
-## With Docker
+#### With Docker
 
     docker run --rm -p 8080:8080 youtous/odfe-alerts-handler --help
 
@@ -36,6 +34,7 @@ Download latest version for your platform from [releases](https://github.com/you
           --smtp.from="opendistro@localhost"    SMTP from address.
           --smtp.default-subject="Opendistro Alert fired"  
                                    SMTP default subject.
+          --debug                  Enable debug mode.
 
     Env:
           LISTEN_ADDRESS           Address to listen on for incoming HTTP requests.
@@ -45,6 +44,7 @@ Download latest version for your platform from [releases](https://github.com/you
           SMTP_PASSWORD            SMTP server login password.
           SMTP_FROM                SMTP from address.
           SMTP_DEFAULT_SUBJECT     SMTP default subject.
+          DEBUG                    Enable debug mode.
     
 
 
@@ -76,8 +76,8 @@ POST _opendistro/_alerting/destinations
 2. The `Message` body look like below:
 
 ```yaml
-to: ['example@test.com']
-subject: ['Optional subject param']
+to: ['example@test.com', 'another@test.com']
+subject: 'Optional subject param'
 ---
 This is the body of the message
 Here you can use the templeting as usual...
@@ -85,17 +85,6 @@ Here you can use the templeting as usual...
 
 `subject` is optional, if not provided the default one used, see [usage](#usage).
 
-
-## Creating a release
-
-```shell
-RELEASE_TITLE="First release"
-RELEASE_VERSION=0.2.0
-
-git tag -a v${RELEASE_VERSION} -m "${RELEASE_TITLE}"
-git push --tags
-goreleaser --rm-dist
-```
 
 ## License
 
