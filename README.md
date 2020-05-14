@@ -56,6 +56,19 @@ Download latest version for your platform from [releases](https://github.com/you
 2. Create the destination with type `Custom webhook`
 3. Choose `Define endpoint by URL`
     - For `email` set the url to have path with `/email`, like `http://odfe-server:8080/email`
+    
+_(alternatively, useful if the frontend fail to validate hostname)_ query:
+```
+POST _opendistro/_alerting/destinations
+{
+  "name": "smtp",
+  "type": "custom_webhook",
+  "custom_webhook": {
+    "url": "http://alerts-smtp-forwarder:8080/email"
+  }
+}
+
+```
 
 ### Sending Email from triggers
 
