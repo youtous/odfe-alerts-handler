@@ -33,6 +33,7 @@ func main() {
 		smtpPassword       = kingpin.Flag("smtp.password", "SMTP server login password.").Default("").Envar("SMTP_PASSWORD").String()
 		smtpFrom           = kingpin.Flag("smtp.from", "SMTP from address.").Default(fmt.Sprintf("opendistro@%s", hostname)).Envar("SMTP_FROM").String()
 		smtpDefaultSubject = kingpin.Flag("smtp.default-subject", "SMTP default subject.").Default("Opendistro Alert fired").Envar("SMTP_DEFAULT_SUBJECT").String()
+		smtpForceTLS       = kingpin.Flag("smtp.force-tls", "SMTP force using TLS.").Envar("SMTP_FORCE_TLS").Bool()
 		debug              = kingpin.Flag("debug", "Enable debug mode.").Envar("DEBUG").Bool()
 	)
 
@@ -42,6 +43,7 @@ func main() {
 	emailHandler := handlers.Email{
 		Host:           *smtpHost,
 		Port:           *smtpPort,
+		ForceTLS:       *smtpForceTLS,
 		Username:       *smtpUsername,
 		Password:       *smtpPassword,
 		From:           *smtpFrom,

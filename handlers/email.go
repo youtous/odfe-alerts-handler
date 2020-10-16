@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"crypto/tls"
 	"fmt"
 	"net"
 	"net/http"
@@ -15,6 +16,7 @@ import (
 type Email struct {
 	Host           string
 	Port           int
+	ForceTLS       bool
 	Username       string
 	Password       string
 	From           string
@@ -43,7 +45,18 @@ func (e *email) send() error {
 		auth = smtp.PlainAuth("", e.Username, e.Password, e.Host)
 	}
 
-	return client.Send(net.JoinHostPort(e.Host, strconv.Itoa(e.Port)), auth)
+	// dealing with SSL init
+	if e.Port == 465 && !e.ForceTLS {
+		// TLS config
+		tlsconfig := &tls.Config{
+			ServerName: e.Host,
+		}
+
+		return client.SendWithTLS(net.JoinHostPort(e.Host, strconv.Itoa(e.Port)), auth, tlsconfig)
+
+	} else {
+		return client.Send(net.JoinHostPort(e.Host, strconv.Itoa(e.Port)), auth)
+	}
 }
 
 // EchoHandler sends email per each incoming http request

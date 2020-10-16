@@ -11,6 +11,7 @@ As for time  of writing `destination` options that `ODFE` provides are limited.
 ## Features
 
 - Ability to handle emails, and even send emails to multiple addresses within same webhook
+- Supports TLS (587) and SSL (465).
 
 ## Usage
 
